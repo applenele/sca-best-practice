@@ -5,13 +5,18 @@ spring:
   cloud:
     gateway:
       routes:
-      - uri: http://localhost:10001
+      - uri: lb://sca-user-center
+        service:
         predicates:
         - Path=/user-center/**
         filters:
         - StripPrefix=1
-      - uri: http://localhost:10002
+      - uri: lb://sca-order
         predicates:
         - Path=/order/**
         filters:
         - StripPrefix=1
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        service: sca-gateway
